@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía de examen — Miguel Hernández</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#EEE6D3;
+    --parchment-dark:#E4D9BF;
+    --ink:#2A2116;
+    --ink-soft:#5B4E3D;
+    --clay:#AB5236;
+    --clay-dark:#8B3F28;
+    --olive:#586C3F;
+    --olive-dark:#3E4E2C;
+    --gold:#B8912F;
+    --line:#C9BB98;
+    --card:#F8F3E6;
+    --sidebar-bg:#2A2116;
+    --sidebar-text:#EEE6D3;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --card:#F8F3E6;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0;
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif;margin:0;}
+
+  .layout{
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar{
+    width:300px;
+    flex-shrink:0;
+    background:var(--sidebar-bg);
+    color:var(--sidebar-text);
+    padding:28px 0 40px;
+    overflow-y:auto;
+    max-height:100vh;
+    position:sticky;
+    top:0;
+  }
+  .sidebar-head{
+    padding:0 24px 20px;
+    border-bottom:1px solid rgba(238,230,211,0.18);
+    margin-bottom:10px;
+  }
+  .sidebar-head .kicker{
+    font-size:12.5px;
+    letter-spacing:.03em;
+    color:var(--gold);
+    font-weight:600;
+  }
+  .sidebar-head h1{
+    font-size:26px;
+    line-height:1.15;
+    margin-top:6px;
+    font-weight:600;
+  }
+  .sidebar-head p{
+    font-size:13px;
+    color:#C9BFA8;
+    margin-top:8px;
+    line-height:1.5;
+  }
+  .book-group{margin-top:18px;}
+  .book-title{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:#C9BFA8;
+    padding:6px 24px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .book-title .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .poem-btn{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    color:var(--sidebar-text);
+    font-family:"Fraunces",serif;
+    font-size:15.5px;
+    padding:9px 24px 9px 34px;
+    cursor:pointer;
+    border-left:3px solid transparent;
+    line-height:1.3;
+  }
+  .poem-btn:hover{background:rgba(238,230,211,0.06);}
+  .poem-btn.active{
+    background:rgba(238,230,211,0.1);
+    border-left:3px solid var(--gold);
+    color:#fff;
+  }
+
+  /* MAIN */
+  .main{
+    flex:1;
+    min-width:0;
+    padding:44px 56px 80px;
+  }
+  .poem-header{
+    border-bottom:2px solid var(--ink);
+    padding-bottom:18px;
+    margin-bottom:28px;
+  }
+  .poem-header .eyebrow{
+    font-size:13px;
+    color:var(--clay-dark);
+    font-weight:600;
+  }
+  .poem-header h2{
+    font-size:38px;
+    margin-top:6px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .poem-header .meta{
+    margin-top:10px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+    font-style:italic;
+    max-width:78ch;
+    line-height:1.55;
+  }
+
+  .qsection{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:20px 26px 22px;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .qsection .qnum{
+    position:absolute;
+    top:-14px;
+    left:22px;
+    background:var(--olive);
+    color:#fff;
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:14px;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .qsection h3{
+    font-size:19px;
+    color:var(--clay-dark);
+    margin-left:20px;
+    margin-bottom:10px;
+    font-weight:600;
+  }
+  .qsection .body{
+    font-size:15.5px;
+    line-height:1.62;
+    color:var(--ink);
+    max-width:80ch;
+  }
+  .qsection .body p{margin:0 0 10px;}
+  .qsection .body p:last-child{margin-bottom:0;}
+  .qsection .body b{color:var(--clay-dark);}
+  .subhead{
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--olive-dark);
+    font-weight:600;
+    margin:12px 0 4px;
+  }
+  .subhead:first-child{margin-top:0;}
+  .note{
+    margin-top:10px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:10px;
+    font-style:italic;
+  }
+  .cite{color:var(--clay-dark);font-style:italic;}
+
+  footer.page-note{
+    max-width:80ch;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    margin-top:28px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width:880px){
+    .layout{flex-direction:column;}
+    .sidebar{width:100%;position:relative;max-height:none;}
+    .main{padding:28px 20px 60px;}
+    .poem-header h2{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="kicker">GUÍA DE EXAMEN</div>
+      <h1>Miguel Hernández</h1>
+      <p>13 poemas · 6 preguntas tipo. Elige un poema para ver qué responder en cada pregunta.</p>
+    </div>
+    <div id="bookList"></div>
+  </nav>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+const QUESTIONS = [
+  "Tema, significado y contenido",
+  "Estructura externa (métrica)",
+  "Estructura interna (división temática)",
+  "Simbolismo",
+  "Estilo: figuras literarias (léxico-semántico y morfosintáctico)",
+  "Etapa y relación con la biografía"
+];
+
+const BOOKS = [
+  {name:"Perito en lunas (1933)", color:"#B8912F"},
+  {name:"El rayo que no cesa (1936)", color:"#AB5236"},
+  {name:"Viento del pueblo (1937)", color:"#586C3F"},
+  {name:"El hombre acecha (1939)", color:"#7A6FA8"},
+  {name:"Cancionero y romancero de ausencias (1938–1941)", color:"#3E7C8A"},
+];
+
+const POEMS = [
+{
+  id:"palmera", book:0, title:"Palmera",
+  meta:"Perito en lunas (1933) — poema-acertijo sobre la palmera, primer libro de Miguel Hernández, escrito bajo la influencia culterana de Góngora.",
+  a:[
+  `<p>El poema no tiene un "tema" en sentido narrativo, sino que es un <b>acertijo visual</b>: describe la palmera de la huerta de Orihuela sin nombrarla, mediante metáforas encadenadas, de modo que el lector debe reconocer el objeto real a través de las imágenes (columna, surtidor, tirabuzón hacia la luna...). El contenido es, por tanto, una descripción estilizada y embellecida de un elemento cotidiano del paisaje natal del poeta, convertido en materia de virtuosismo poético.</p>`,
+  `<p>Los poemas de <i>Perito en lunas</i> están escritos en <b>octava real</b>: 8 versos endecasílabos (arte mayor) con rima consonante, esquema típico <b>ABABABCC</b> (los seis primeros versos alternos y el pareado final que cierra la estrofa). Es una forma culta, heredada de la tradición renacentista e italianizante, coherente con el gongorismo del libro.</p>`,
+  `<p>Al tratarse de una sola octava, la división es interna más que estrófica: puede señalarse una primera parte centrada en el <b>tronco</b> (comparado con una columna, una espuela, un camello de canela) y una segunda centrada en la <b>copa/follaje</b> (el "tirabuzón" hacia la luna, las "gargantillas de oro", la "sierpe" que canta). El pareado final suele cerrar la imagen con el rasgo más audaz o sorprendente.</p>`,
+  `<p>La palmera simboliza el <b>eje vertical que une la tierra y el cielo</b>: nace de la tierra (el "camello de canela") y se proyecta hacia la luna (hipérbole de altura). Funciona también como símbolo de un <b>refugio de belleza natural</b> ("oasis de beldad"), vinculado al exotismo y a la huerta de Orihuela estilizada por el arte.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas puras y encadenadas ("columna", "surtidor", "el camello de canela", "tirabuzón" hacia la luna, "oasis de beldad a toda vela"), hipérbole (la altura hasta la luna) y personificaciones ("viento esbelto pace", la sierpe "canta"). <b>Morfosintáctico:</b> apóstrofe inicial dirigido al propio objeto descrito ("Anda, columna"), que da un tono de familiaridad casi lúdica al enigma.</p>`,
+  `<p>Pertenece a la <b>primera etapa</b> de Miguel Hernández (1933), marcada por su formación autodidacta, la lectura de los clásicos (Góngora) y de la poesía pura/vanguardista de la Generación del 27. Es un ejercicio de virtuosismo formal, previo a su giro hacia una poesía más personal y "humanizada" que llegará con <i>El rayo que no cesa</i>.</p>`
+  ]
+},
+{
+  id:"limon", book:1, title:'"Me tiraste un limón, y tan amargo"',
+  meta:"El rayo que no cesa (1936) — soneto amoroso en el que el limón simboliza el deseo y la posterior desilusión.",
+  a:[
+  `<p>El poema desarrolla una experiencia de <b>deseo amoroso frustrado</b>: un gesto aparentemente inocente (que le lancen un limón) desencadena en el poeta una cadena de sensaciones —amargor, excitación, ilusión— que termina en desengaño y dolor al comprobar que la mujer no comparte su intención. Es un poema sobre la ambivalencia del deseo: algo dulce y doloroso a la vez.</p>`,
+  `<p><b>Soneto</b>: 14 versos endecasílabos de arte mayor, agrupados en dos cuartetos de rima consonante abrazada (ABBA ABBA) y dos tercetos (esquema habitual CDC DCD, aunque conviene comprobarlo sobre el fragmento concreto que entregue el examen). Es la forma clásica por excelencia, heredada de Garcilaso y Quevedo.</p>`,
+  `<p>Sigue el propio recorrido simbólico del limón: <b>1er cuarteto</b> — el lanzamiento del limón y su descripción física; <b>2º cuarteto</b> — el efecto en el cuerpo del poeta (paso del letargo a la "ansiosa calentura"); <b>tercetos</b> — la ilusión amorosa y, finalmente, el golpe de la desilusión convertida en "picuda y deslumbrante pena".</p>`,
+  `<p>El limón funciona como símbolo central y va transformándose a lo largo del poema: <b>limón → deseo → excitación → sonrisa de la amada → desilusión → pena</b>. Su amargor inicial anticipa el desenlace doloroso; su color amarillo y su forma se asocian metafóricamente al cuerpo femenino.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas sensoriales y corporales ("con el golpe amarillo", "de una punta de seno duro y largo", "el limonado hecho"), epítetos sensuales ("cálida y pura", "poroso y áureo pecho"), antítesis (letargo/ansiosa calentura) y personificación ("mi sangre, que sintió la mordedura"). <b>Morfosintáctico:</b> paralelismo en el primer cuarteto ("Me tiraste un limón, y tan amargo, / con una mano cálida, y tan pura") e hipérbaton ("de una punta de seno duro y largo").</p>`,
+  `<p>Pertenece a <i>El rayo que no cesa</i> (1936), etapa dominada por el amor no correspondido y el sufrimiento pasional, con una forma (el soneto) heredada del petrarquismo y del Siglo de Oro, pero con una carga sensorial y corporal muy propia de Hernández.</p>`
+  ]
+},
+{
+  id:"toro", book:1, title:'"Como el toro he nacido para el luto"',
+  meta:"El rayo que no cesa (1936) — soneto en el que el poeta se identifica con el toro como símbolo de su destino doloroso.",
+  a:[
+  `<p>El poeta se identifica plenamente con el <b>toro de lidia</b> para expresar su propio destino: un ser nacido para el sufrimiento, la pasión desmedida y la muerte, incapaz de escapar de su condición trágica en el amor. El poema expresa la desproporción entre la intensidad de su sentimiento y el rechazo o la incomprensión que recibe.</p>`,
+  `<p><b>Soneto</b> endecasílabo, con la estructura clásica de dos cuartetos y dos tercetos de rima consonante (esquema tipo ABBA ABBA CDC DCD; conviene verificarlo sobre el fragmento exacto del examen).</p>`,
+  `<p>Los cuartetos establecen la <b>comparación yo-toro</b> y el sufrimiento heredado desde el nacimiento; los tercetos intensifican la entrega amorosa desmedida y el destino de muerte simbolizado en la espada, cerrando el poema con la imagen del toro que "sigue" a su destino sin remedio.</p>`,
+  `<p>El toro simboliza la <b>fuerza, la pasión y el sufrimiento</b> destinados a la muerte; el "hierro infernal" y la "espada" representan la marca del dolor amoroso; el corazón "desmesurado" frente al toro que lo halla "diminuto" expresa la desproporción entre la capacidad de amar del poeta y lo que recibe a cambio.</p>`,
+  `<p><b>Léxico-semántico:</b> símil reiterado "Como el toro" (recurso vertebrador de todo el poema), metáforas (el "vendaval sonoro", "un hierro infernal en el costado", "dejas mi deseo en una espada"), hipérbole ("corazón desmesurado") y antítesis (diminuto/desmesurado). <b>Morfosintáctico:</b> anáfora de "Como el toro" al inicio de varios versos, paralelismos ("Como el toro he nacido…", "Como el toro lo encuentro…") e hipérbaton ("la lengua en corazón tengo bañada").</p>`,
+  `<p>Mismo periodo que el poema anterior (1936), cumbre del hermetismo humanizado de Hernández: sonetos de amor doloroso que combinan la tradición culta (Góngora, Quevedo) con un imaginario muy físico y elemental (sangre, cuerpo, animalidad), anticipando ya la fuerza expresiva de su poesía posterior.</p>`
+  ]
+},
+{
+  id:"sije", book:1, title:'"Elegía a Ramón Sijé"',
+  meta:"El rayo que no cesa (1936) — elegía por la muerte de su amigo Ramón Sijé (diciembre de 1935).",
+  a:[
+  `<p>El poema expresa el <b>dolor, la rabia y la impotencia</b> del poeta ante la muerte repentina de su amigo Ramón Sijé, con quien mantenía además una relación distanciada en esos últimos meses (lo que añade un componente de remordimiento). A la vez, el poema evoluciona hacia el deseo, imposible, de recuperar a su amigo y reencontrarse con él, convirtiendo el dolor personal en una reflexión sobre la amistad, la muerte y el recuerdo.</p>`,
+  `<p>Se compone de <b>15 tercetos encadenados</b> de versos endecasílabos (esquema ABA BCB CDC…, en el que el verso suelto de cada terceto rima con los dos versos del siguiente) y se cierra con un <b>serventesio final</b> (ABAB) a modo de colofón. Es una forma culta de raíz dantesca (terza rima), muy poco frecuente y empleada aquí "magistralmente" según la crítica.</p>`,
+  `<p>Puede dividirse en tres bloques: <b>(1)</b> la voluntad de hacerse "hortelano" de la tierra que cubre a su amigo, dando comienzo al duelo; <b>(2)</b> la explosión de dolor y rabia, con la reiteración de "no perdono" a la muerte, la vida y la nada; <b>(3)</b> el deseo desesperado —y finalmente esperanzado— de recuperar a Sijé y reencontrarse con él ("Volverás a mi huerto y a mi higuera… compañero del alma, compañero").</p>`,
+  `<p>La <b>tierra</b> simboliza la muerte y la sepultura, pero también la posibilidad de regreso a la vida; la <b>lluvia</b> y el <b>huerto/higuera/almendro</b> representan la vida y el recuerdo; la <b>amapola</b> se asocia a la sangre y al dolor. Estos símbolos, propios del mundo campesino de Orihuela, funden la muerte del amigo con el ciclo de la naturaleza.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas del dolor físico ("tanto dolor se agrupa en mi costado"), personificación de la muerte ("la muerte enamorada"), hipérboles ("quiero escarbar la tierra con los dientes"). <b>Morfosintáctico:</b> anáforas ("no perdono…", "quiero…"), paralelismos, enumeración ("manotazo duro, golpe helado, / hachazo invisible y homicida") e hipérbaton ("del almendro de nata te requiero").</p>`,
+  `<p>Escrita a raíz de la muerte de Sijé (diciembre 1935) e incluida en <i>El rayo que no cesa</i> (1936). Marca una transición dentro de esa obra: manteniendo el hermetismo formal del soneto amoroso, introduce ya una emoción más desnuda y personal que anticipa el giro hacia la poesía social y humana de <i>Viento del pueblo</i>.</p>`
+  ]
+},
+{
+  id:"vientos", book:2, title:'"Vientos del pueblo me llevan"',
+  meta:"Viento del pueblo (1937) — poema social escrito durante la Guerra Civil, canto a la fuerza combativa del pueblo.",
+  a:[
+  `<p>El poeta expresa su <b>orgullo de pertenecer al pueblo</b> y su compromiso con la lucha republicana, presentando al pueblo como una fuerza colectiva imparable (los "leones") frente a quienes intentan someterlo (imagen del yugo sobre los "bueyes"). El tono es exhortativo: invita a la resistencia y a la lucha incluso ante la muerte.</p>`,
+  `<p><b>Romance</b>: serie indefinida de versos octosílabos (arte menor) con rima asonante en los versos pares y los impares sueltos. Es la forma popular y oral por excelencia, muy usada en la poesía de urgencia y propaganda de la Guerra Civil por su facilidad para la difusión oral y el canto.</p>`,
+  `<p>Se alternan dos bloques temáticos: la <b>afirmación de la fuerza del pueblo</b> (imagen de los leones, la sangre valiente) frente a la <b>denuncia de la opresión</b> (el yugo sobre los bueyes doblados), para desembocar en una llamada final a no rendirse pase lo que pase ("si me muero, que me muera / con la cabeza muy alta").</p>`,
+  `<p>El <b>viento</b> simboliza la fuerza y el espíritu combativo del pueblo que "lleva" y "arrastra" al poeta; los <b>leones</b> representan la valentía y la fiereza del pueblo en armas; los <b>bueyes</b> y el <b>yugo</b> simbolizan la sumisión y la opresión que el poeta rechaza.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas colectivas ("yacimientos de leones"), antítesis (bueyes/leones, manso/bravo), hipérbole ("muerto y veinte veces muerto"), símil ("como el toro"). <b>Morfosintáctico:</b> anáfora ("Si me muero…", "vientos…"), paralelismo ("Vientos del pueblo me llevan, / vientos del pueblo me arrastran"), enumeración y apóstrofe en segunda persona ("Yugos que habéis de poner…").</p>`
+  ,`<p>Escrito en plena Guerra Civil (1936-37) e incluido en <i>Viento del pueblo</i> (1937): marca el giro hacia la <b>poesía social y comprometida</b>, en la línea de la "rehumanización" de la poesía y del compromiso republicano de Hernández, alejándose del hermetismo de <i>El rayo que no cesa</i>.</p>`
+  ]
+},
+{
+  id:"aceituneros", book:2, title:'"Aceituneros"',
+  meta:"Viento del pueblo (1937) — poema social dedicado a los jornaleros del olivar de Jaén.",
+  a:[
+  `<p>El poema reivindica la <b>dignidad de los jornaleros del olivar de Jaén</b>, denunciando la explotación histórica que sufren pese a ser ellos quienes, con su trabajo, "levantan" y "amamantan" los olivos. Termina siendo un llamamiento directo a la rebeldía y a la conciencia colectiva de los trabajadores.</p>`,
+  `<p><b>Romance</b>: versos octosílabos con rima asonante en los pares, forma popular y de fácil difusión oral, coherente con su función de propaganda y reivindicación social durante la Guerra Civil.</p>`,
+  `<p>Se estructura en tres momentos: <b>preguntas retóricas iniciales</b> sobre quién ha creado la riqueza del olivar ("¿quién levantó los olivos?"); <b>denuncia</b> de siglos de explotación y pobreza ("que os sepultó en la pobreza"); y <b>llamada final</b> a la rebeldía y la dignidad ("Levántate, olivo cano", "Jaén, levántate brava").</p>`,
+  `<p>El <b>olivo</b> simboliza la tierra de Jaén y, a la vez, el trabajo y el sufrimiento de los campesinos; el <b>sudor</b> y la <b>sangre</b> representan el sacrificio del trabajador; el <b>pan</b> simboliza los frutos del trabajo, que paradójicamente disfrutan otros ("sólo el otro comía").</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas del trabajo agrícola ("¿quién amamantó los olivos?"), personificación del olivo ("Levántate, olivo cano", "el olivo alzó una mano"), hipérbole ("¡Cuántos siglos de aceituna!") y antítesis aceituneros/terratenientes. <b>Morfosintáctico:</b> anáforas ("que os sepultó… / que os pisoteó… / que os redujo…"), interrogaciones retóricas ("¿quién, quién levantó los olivos?"), paralelismo ("sol a sol y luna a luna") y apóstrofe ("Andaluces de Jaén, aceituneros altivos").</p>`,
+  `<p>Igual que el poema anterior, pertenece a <i>Viento del pueblo</i> (1937), plena etapa de compromiso social durante la Guerra Civil: Hernández pone su poesía al servicio de la denuncia de la injusticia social en el campo andaluz, tema que ya había esbozado antes en poemas como "El niño yuntero".</p>`
+  ]
+},
+{
+  id:"esposo", book:2, title:'"Canción del esposo soldado"',
+  meta:"Viento del pueblo (1937) — el poeta-soldado, desde el frente, se dirige a su esposa embarazada.",
+  a:[
+  `<p>El poema funde el <b>amor conyugal</b>, la <b>paternidad</b> y la <b>guerra</b>: un soldado en el frente se dirige a su esposa, evocando el amor físico y la concepción de su hijo como forma de afirmar la vida y la esperanza frente a la muerte que lo rodea en el combate.</p>`,
+  `<p>El poema se aparta del octosílabo del romance y utiliza predominantemente <b>versos de arte mayor (alejandrinos, de 14 sílabas)</b> agrupados en estrofas de rima consonante. Conviene comprobar el esquema exacto de rima sobre el fragmento concreto que entregue el examen; lo importante es identificar el contraste entre este verso largo y solemne y el octosílabo popular de otros poemas del mismo libro.</p>`,
+  `<p>Alterna estrofas de <b>evocación amorosa/erótica</b> de la esposa ("Espejo de mi carne, sustento de mis alas") con estrofas centradas en la <b>guerra y la paternidad</b> como acto de resistencia ("y defiendo tu vientre… y defiendo tu hijo"), construyendo un contraste constante entre amor/vida y muerte/destrucción.</p>`,
+  `<p>El <b>vientre</b>, la <b>sementera</b>, el <b>surco</b> y el <b>arado</b> simbolizan la fecundidad y el nacimiento; las <b>balas</b>, el <b>plomo</b> y los <b>ataúdes</b> representan la guerra y la muerte; la <b>esposa</b> encarna el amor, el hogar y el motivo mismo por el que el soldado lucha y resiste.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas agrícolas-eróticas ("he poblado tu vientre de amor y sementera"), comparaciones ("como el arado espera"), antítesis ("te doy vida en la muerte que me dan y no tomo") e hipérbole ("hasta en el polvo, esposa"). <b>Morfosintáctico:</b> anáforas y paralelismos ("y defiendo tu vientre… y defiendo tu hijo") y apóstrofe directo a la esposa ("Mujer, mujer…").</p>`,
+  `<p>Escrito durante la Guerra Civil (1936-37), en <i>Viento del pueblo</i>: representa el punto en que la poesía social de Hernández se cruza con su vida personal (su matrimonio con Josefina Manresa y el nacimiento de su primer hijo), anticipando la vertiente más íntima que desarrollará en <i>Cancionero y romancero de ausencias</i>.</p>`
+  ]
+},
+{
+  id:"herido", book:3, title:'"El herido"',
+  meta:"El hombre acecha (1939) — visión más dolorosa y desengañada de la guerra, pero con esperanza en la libertad.",
+  a:[
+  `<p>El poema presenta el <b>sufrimiento físico y emocional de un soldado herido</b>, pero, pese al dolor, mantiene la esperanza y el compromiso con la libertad. Frente al tono combativo de <i>Viento del pueblo</i>, aquí predomina una visión más desengañada y dolorosa de la guerra, aunque no exenta de una resistencia vital de fondo.</p>`,
+  `<p>El poema utiliza una versificación de tendencia al <b>verso largo</b> (predominan versos de arte mayor, cercanos al alejandrino), sin un esquema estrófico fijo y con rima variable, más próxima al versículo que a las formas cerradas de los sonetos: conviene analizar con cuidado el fragmento exacto que aparezca en el examen para precisar metro y rima.</p>`,
+  `<p>Puede dividirse en: <b>(1)</b> la descripción física del dolor y la sangre del herido; <b>(2)</b> la reflexión sobre el cuerpo mutilado, comparado con un árbol talado que sin embargo puede "retoñar"; <b>(3)</b> la afirmación final del compromiso con la libertad pese al sufrimiento ("Para la libertad sangro, lucho, pervivo").</p>`,
+  `<p>La <b>herida</b> simboliza el dolor de la guerra y de la vida misma; la <b>sangre</b> representa la vida, el sacrificio y la lucha; el <b>árbol</b> y el <b>retoño</b> simbolizan la capacidad de renacer tras la destrucción; la <b>libertad</b> es el ideal por el que el herido acepta su sacrificio.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas vegetales del cuerpo ("como un árbol carnal", "en la carne talada"), sinestesia ("la sangre huele a mar, sabe a mar y a bodega"), comparaciones ("igual que caracolas") y antítesis herida/vida, destrucción/crecimiento. <b>Morfosintáctico:</b> anáfora y paralelismo ("Para la libertad…"), polisíndeton ("y entro en los hospitales, y entro en los algodones"), hipérbaton y apóstrofe ("Herido estoy, miradme").</p>`,
+  `<p>Pertenece a <i>El hombre acecha</i> (1939), escrito hacia el final de la Guerra Civil: refleja el desengaño y el pesimismo crecientes de Hernández ante el curso del conflicto, aunque conserva, como rasgo distintivo suyo, una resistencia esperanzada frente a la destrucción.</p>`
+  ]
+},
+{
+  id:"cancionultima", book:3, title:'"Canción última"',
+  meta:"El hombre acecha (1939) — la casa familiar como símbolo de esperanza y reconstrucción tras la guerra.",
+  a:[
+  `<p>El poema imagina la posibilidad de <b>reconstruir el hogar y la vida familiar</b> tras la destrucción de la guerra. La casa "pintada, no vacía" se convierte en la afirmación de que, pese a todo lo vivido, algo sobrevive y puede ser recuperado: una esperanza contenida y sobria, no triunfalista.</p>`,
+  `<p>Poema breve, de <b>versos cortos</b> (predominan heptasílabos y pentasílabos) con rima asonante, de aire popular y cercano a la copla, en la línea de sencillez formal que Hernández desarrollará plenamente en <i>Cancionero y romancero de ausencias</i>.</p>`,
+  `<p>Se estructura en torno a la imagen fija de la casa: <b>presentación</b> de la casa como "pintada, no vacía" (primera afirmación de esperanza); <b>evocación</b> del color como símbolo de las experiencias intensas y dolorosas vividas; y <b>cierre</b> con la personificación de la casa que "se queda", esperando.</p>`,
+  `<p>La <b>casa</b> simboliza el hogar, la familia y la esperanza de reconstrucción tras la guerra; la <b>higuera</b>, mencionada en relación con ella, refuerza la imagen de un hogar vivo y ligado a la naturaleza y a la vida.</p>`,
+  `<p><b>Léxico-semántico:</b> metáfora central (la casa como vida familiar), antítesis ("pintada, no vacía") y personificación ("la casa se queda"). <b>Morfosintáctico:</b> anáfora y paralelismo ("Pintada, no vacía / pintada está mi casa") e hipérbaton ("Pintada está mi casa").</p>`,
+  `<p>Cierra <i>El hombre acecha</i> (1939), en el tramo final de la Guerra Civil: anticipa ya la sobriedad, la brevedad y el tono íntimo que definirán <i>Cancionero y romancero de ausencias</i>, escrito en los años de cárcel que siguieron.</p>`
+  ]
+},
+{
+  id:"tresheridas", book:4, title:'"Llegó con tres heridas"',
+  meta:"Cancionero y romancero de ausencias (1938-1941) — síntesis de la existencia humana en tres heridas: vida, amor y muerte.",
+  a:[
+  `<p>El poema condensa en una fórmula brevísima los <b>tres grandes temas de la existencia humana</b>: la vida, el amor y la muerte, presentados como "heridas" que atraviesan a todo ser humano. No son heridas físicas, sino símbolos de la condición humana y de su sufrimiento esencial.</p>`,
+  `<p>Poema muy breve, de <b>versos cortos</b> de tipo popular (propio de la seguidilla/copla, alternando heptasílabos y pentasílabos), con rima asonante, en la línea de máxima concentración expresiva característica de todo el <i>Cancionero y romancero de ausencias</i>.</p>`,
+  `<p>Estructura tripartita y muy repetitiva: se presentan las tres heridas (vida, amor, muerte), se desarrollan en paralelo mediante los mismos elementos formales, y se cierran reuniéndolas de nuevo, insistiendo en que las tres son, en el fondo, una sola experiencia inseparable.</p>`,
+  `<p>Las <b>tres heridas</b> simbolizan la vida, el amor y la muerte como las tres fuerzas fundamentales e inevitables que definen la existencia humana; su repetición como "herida" subraya el sufrimiento inherente a las tres.</p>`,
+  `<p><b>Léxico-semántico:</b> metáfora central (herida = experiencia vital fundamental) y repetición léxica insistente de "vida", "amor" y "muerte", que crea una sensación de obsesión e intensidad. <b>Morfosintáctico:</b> anáfora y paralelismo estricto entre los tres miembros del poema ("la de la vida", "la del amor", "la de la muerte").</p>`,
+  `<p>Pertenece a la última etapa de Hernández (1938-1941), escrita durante los años de cárcel: representa la madurez y el despojamiento formal de su poesía final, que sintetiza toda su temática (amor, vida, muerte) con una economía verbal extrema.</p>`
+  ]
+},
+{
+  id:"tristesguerras", book:4, title:'"Tristes guerras"',
+  meta:"Cancionero y romancero de ausencias (1938-1941) — breve poema antibelicista que opone la guerra al amor.",
+  a:[
+  `<p>El poema expresa, en muy pocas palabras, un claro <b>mensaje antibelicista</b>: rechaza la guerra si su empresa no es el amor, defendiendo la paz y la unión frente a la violencia. Es una sentencia condensada más que un desarrollo narrativo.</p>`,
+  `<p>Poema brevísimo, de <b>versos muy cortos</b> (predominan los hexasílabos), con rima asonante y estructura cancioneril, cercano a la copla o el estribillo popular, característico de todo este libro.</p>`,
+  `<p>No hay apenas desarrollo argumental: el poema avanza por <b>enumeración progresiva</b> de elementos ligados a la guerra ("tristes guerras", "tristes armas", "tristes hombres"), todos ellos calificados como "tristes" por la ausencia de amor como motor de la acción.</p>`,
+  `<p>La <b>guerra</b> simboliza la destrucción y la muerte sin sentido cuando no está guiada por el amor; el <b>amor</b> representa, por contraste, el valor positivo, la paz y la solidaridad que deberían mover a los hombres.</p>`,
+  `<p><b>Léxico-semántico:</b> antítesis central guerra/amor y repetición léxica insistente de "tristes". <b>Morfosintáctico:</b> anáfora y paralelismo estructural estricto en el inicio de cada verso o estrofa ("Tristes guerras", "Tristes armas", "Tristes hombres").</p>`,
+  `<p>Escrito en la última etapa (1938-1941), durante la cárcel, en pleno dolor por la derrota republicana: refleja el tono sentencioso, depurado y desengañado de <i>Cancionero y romancero de ausencias</i>, muy alejado ya del tono combativo de <i>Viento del pueblo</i>.</p>`
+  ]
+},
+{
+  id:"hijoluz", book:4, title:'"Hijo de la luz y de la sombra"',
+  meta:"Cancionero y romancero de ausencias (1938-1941) — poema dedicado a Josefina Manresa sobre la concepción de su hijo.",
+  a:[
+  `<p>El poema está dedicado a su esposa, Josefina Manresa, y presenta al <b>hijo como fruto del amor</b> entre ambos, en medio de la dureza de la Guerra Civil, la cárcel y la separación. La luz y la sombra representan respectivamente la vida y la esperanza frente al dolor y la muerte, y el poema plantea la creación de una nueva vida como lucha entre esas fuerzas opuestas.</p>`,
+  `<p>Combina <b>versos de distinta medida</b> (fundamentalmente heptasílabos y endecasílabos, con tendencia a la silva), con rima variable, dentro del estilo más libre y flexible propio de <i>Cancionero y romancero de ausencias</i>; conviene precisar el esquema concreto sobre el fragmento que aparezca en el examen.</p>`,
+  `<p>Puede dividirse en: <b>invocación</b> a la esposa identificada con la noche y el alba ("Tú eres la noche, esposa"); <b>petición de unión</b> física y espiritual entre ambos; y <b>proyección final</b> en el hijo como síntesis de luz y sombra, de vida y dolor.</p>`,
+  `<p>La <b>luz</b> simboliza la vida, el amor y la esperanza; la <b>sombra</b>, el dolor, la muerte y la ausencia; la <b>tierra</b> representa el origen y la fecundidad; el <b>hijo</b> es la continuación de la vida frente a la destrucción de la guerra.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas de la naturaleza ("hijo del alba", "pétreas matrices"), antítesis luz/sombra y un amplio campo semántico de la naturaleza (trigo, raíces, resinas, miel, colmenas…). <b>Morfosintáctico:</b> anáfora ("Tú eres la noche, esposa…"), paralelismo ("tú y yo sobre la manta, / tú y yo sobre la luna…"), polisíndeton y enumeración.</p>`,
+  `<p>Pertenece a la última etapa (1938-1941), escrita en la cárcel y dedicada a su esposa: es una muestra del tono íntimo y esperanzado que Hernández mantiene pese al contexto trágico de encarcelamiento y separación familiar.</p>`
+  ]
+},
+{
+  id:"nanas", book:4, title:'"Nanas de la cebolla"',
+  meta:"Cancionero y romancero de ausencias (1939) — nana escrita en la cárcel a partir de una carta de su esposa Josefina.",
+  a:[
+  `<p>El poema nace de una carta real de Josefina Manresa, en la que contaba que ella y su hijo apenas tenían para comer más que pan y cebolla. Hernández transforma esa <b>situación de hambre y pobreza</b> en una canción de cuna en la que intenta proteger a su hijo mediante la imaginación, la risa y la esperanza, contraponiendo el dolor de los adultos a la inocencia y alegría del niño.</p>`,
+  `<p><b>Silva</b> de heptasílabos y endecasílabos (versificación libre, típica de la nana o canción de cuna), con rima asonante irregular y un ritmo marcadamente cantable, coherente con su función de canción de cuna real.</p>`,
+  `<p>Se estructura en torno al contraste: <b>presentación</b> de la cebolla y el hambre como realidad de la posguerra ("la cebolla es escarcha…", "en la cuna del hambre / mi niño estaba"); <b>contraste</b> con la risa y la alegría del niño ("tu risa me hace libre", "es tu risa la espada / más victoriosa"); y <b>deseos y esperanzas</b> finales del padre para el hijo.</p>`,
+  `<p>La <b>cebolla</b> simboliza el hambre y la pobreza; la <b>risa</b> representa la alegría, la libertad y la esperanza; el <b>niño</b> simboliza el futuro y la posibilidad de superar el sufrimiento heredado de la guerra y la cárcel.</p>`,
+  `<p><b>Léxico-semántico:</b> metáforas ("la cebolla es escarcha cerrada y pobre", "es tu risa la espada más victoriosa"), antítesis constantes (cebolla/risa, hambre/risa, vida/muerte) e hipérbole ("es tu risa en los ojos la luz del mundo"). <b>Morfosintáctico:</b> anáforas ("con cinco azahares… con cinco diminutas… con cinco dientes"), paralelismo, apóstrofe directo al hijo ("ríete tanto") y exclamaciones retóricas ("¡Cuánto jilguero se remonta…!").</p>`,
+  `<p>Escrito en 1939, durante el encarcelamiento de Hernández tras la Guerra Civil: culmina su poesía más íntima y desnuda, en la línea de <i>Cancionero y romancero de ausencias</i>, combinando la tradición de la lírica popular (nanas, cancionero) con el dolor personal más extremo de su biografía.</p>`
+  ]
+}
+];
+
+const questionsHTML = QUESTIONS;
+
+function buildSidebar(){
+  const container = document.getElementById('bookList');
+  BOOKS.forEach((book, bi)=>{
+    const group = document.createElement('div');
+    group.className = 'book-group';
+    const title = document.createElement('div');
+    title.className = 'book-title';
+    title.innerHTML = `<span class="dot" style="background:${book.color}"></span>${book.name}`;
+    group.appendChild(title);
+    POEMS.filter(p=>p.book===bi).forEach(p=>{
+      const btn = document.createElement('button');
+      btn.className = 'poem-btn';
+      btn.textContent = p.title;
+      btn.dataset.id = p.id;
+      btn.addEventListener('click', ()=>selectPoem(p.id));
+      group.appendChild(btn);
+    });
+    container.appendChild(group);
+  });
+}
+
+function selectPoem(id){
+  const poem = POEMS.find(p=>p.id===id);
+  if(!poem) return;
+  document.querySelectorAll('.poem-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.id===id);
+  });
+  const main = document.getElementById('main');
+  const book = BOOKS[poem.book];
+  let html = `
+    <div class="poem-header">
+      <div class="eyebrow">${book.name}</div>
+      <h2>${poem.title}</h2>
+      <div class="meta">${poem.meta}</div>
+    </div>
+  `;
+  poem.a.forEach((content, i)=>{
+    html += `
+      <div class="qsection">
+        <div class="qnum">${i+1}</div>
+        <h3>${questionsHTML[i]}</h3>
+        <div class="body">${content}</div>
+      </div>
+    `;
+  });
+  html += `<footer class="page-note">Guía de apoyo para el examen. Para la pregunta de <b>estructura externa (métrica)</b>, el examen suele mostrar un fragmento concreto: usa esta ficha para reconocer la forma general del poema, pero comprueba siempre el esquema exacto de rima sobre el propio fragmento entregado.</footer>`;
+  main.innerHTML = html;
+  main.scrollTop = 0;
+  window.scrollTo(0,0);
+}
+
+buildSidebar();
+selectPoem(POEMS[0].id);
+</script>
+</body>
+</html>
